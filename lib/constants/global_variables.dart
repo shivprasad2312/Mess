@@ -29,24 +29,24 @@ static const List<String> carouselImages = [
 
   static const List<Map<String, String>> categoryImages = [
     {
-      'title': 'Mobiles',
-      'image': 'assets/images/mobiles.jpeg',
+      'title': 'Pizza',
+      'image': 'images/pizza.png',
     },
     {
-      'title': 'Essentials',
-      'image': 'assets/images/essentials.jpeg',
+      'title': 'Ice',
+      'image': 'images/ice-cream.png',
     },
     {
-      'title': 'Appliances',
-      'image': 'assets/images/appliances.jpeg',
+      'title': 'Burger',
+      'image': 'images/burger.png',
     },
     {
-      'title': 'Books',
-      'image': 'assets/images/books.jpeg',
+      'title': 'Coffee',
+      'image': 'images/coffee.png',
     },
     {
       'title': 'Fashion',
-      'image': 'assets/images/fashion.jpeg',
+      'image': 'images/coffee.png',
     },
   ];
 

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mess/constants/global_variables.dart';
 import 'package:mess/features/account/screens/account_screen.dart';
 import 'package:mess/features/home/screens/home_screen.dart';
-import 'package:mess/providers/user_provider.dart';
-import 'package:provider/provider.dart';
 
 class BottomBar extends StatefulWidget {
   static const String routeName = '/actual-home';
