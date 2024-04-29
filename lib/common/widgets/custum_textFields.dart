@@ -4,11 +4,14 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final int maxLines;
+  final FormFieldValidator<String>? validator; 
+  
   const CustomTextField({
     Key? key,
     required this.controller,
     required this.hintText,
     this.maxLines = 1,
+    this.validator, 
   }) : super(key: key);
 
   @override
@@ -25,13 +28,8 @@ class CustomTextField extends StatelessWidget {
               borderSide: BorderSide(
             color: Colors.black38,
           ))),
-      validator: (val) {
-        if (val == null || val.isEmpty) {
-          return 'Enter your $hintText';
-        }
-        return null;
-      },
+      validator: validator, 
       maxLines: maxLines,
     );
-  }
+  }   
 }

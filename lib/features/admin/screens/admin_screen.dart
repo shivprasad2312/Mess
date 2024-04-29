@@ -20,10 +20,10 @@ int _page = 0;
   List<Widget> pages = [
     PostsScreen(),
     const Center(
-      child: Text("Analytics Page"),
+      child: Text("Accamodation"),
     ),
 
-    const Center(child: Text("Cart Page"),),
+    const Center(child: Text("Admin cart"),),
   ];
 
   void updatePage(int page) {
@@ -50,13 +50,13 @@ int _page = 0;
               Container(
                 alignment: Alignment.topLeft,
                 child: const Text(
-                  "Mess Station",style: TextStyle(color: Colors.black),
+                  "Allin",style: TextStyle(color: Colors.black),
                 )
               ),
               Container(
                 padding: const EdgeInsets.only(left: 5, right: 5),
                 child: Text(
-                  "Admin",style: TextStyle(color: Colors.black),
+                  "Food",style: TextStyle(color: Colors.black),
                 )
               )
             ],

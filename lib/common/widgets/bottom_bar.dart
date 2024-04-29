@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mess/constants/global_variables.dart';
 import 'package:mess/features/account/screens/account_screen.dart';
+import 'package:mess/features/home/screens/food_screen.dart';
 import 'package:mess/features/home/screens/home_screen.dart';
+import 'package:mess/features/home/screens/rent_screen.dart';
 
 class BottomBar extends StatefulWidget {
   static const String routeName = '/actual-home';
@@ -18,7 +20,8 @@ class _BottomBarState extends State<BottomBar> {
 
   List<Widget> pages = [
     HomeScreen(),
-    const AccountScreen(),
+    const FoodScreen(),
+    const RentScreen(),
     const Center(child: Text("Cart "),),
   ];
 
@@ -77,11 +80,34 @@ class _BottomBarState extends State<BottomBar> {
                 ),
               ),
               child: const Icon(
-                Icons.person_outline_outlined,
+                Icons.dining_rounded,
               ),
             ),
             label: '',
           ),
+
+          BottomNavigationBarItem(
+            icon: Container(
+              width: bottomBarWidth,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: _page == 2
+                        ? GlobalVariables.selectedNavBarColor
+                        : GlobalVariables.backgroundColor,
+                    width: bottomBarBorderWidth,
+                  ),
+                ),
+              ),
+              child: 
+                Icon(
+                  Icons.house_outlined,
+                ),
+              // ),
+            ),
+            label: '',
+          ),
+
           // CART
           BottomNavigationBarItem(
             icon: Container(
@@ -98,7 +124,7 @@ class _BottomBarState extends State<BottomBar> {
               ),
               child: 
                 Icon(
-                  Icons.shopping_cart_outlined,
+                  Icons.person,
                 ),
               // ),
             ),

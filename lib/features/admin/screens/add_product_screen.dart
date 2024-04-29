@@ -1,8 +1,8 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/material.dart';
 import 'package:mess/common/widgets/custom_buttons.dart';
 import 'package:mess/common/widgets/custum_textFields.dart';
 import 'package:mess/constants/global_variables.dart';
@@ -10,7 +10,7 @@ import 'package:mess/constants/utils.dart';
 import 'package:mess/features/admin/service/admin_services.dart';
 
 class AddProductScreen extends StatefulWidget {
-  static const String routeName = '/add-product';
+  static const String routeName = '/add';
   const AddProductScreen({Key? key}) : super(key: key);
 
   @override
@@ -19,7 +19,10 @@ class AddProductScreen extends StatefulWidget {
 
 class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController productNameController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController productDescriptionController = TextEditingController();
+  final TextEditingController shopNameController= TextEditingController();
+  final TextEditingController shopDescriptionController = TextEditingController();
+  final TextEditingController shopIdController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
   final AdminServices adminServices = AdminServices();
@@ -32,7 +35,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
   void dispose() {
     super.dispose();
     productNameController.dispose();
-    descriptionController.dispose();
+    productDescriptionController.dispose();
+    shopNameController.dispose();
+    shopDescriptionController.dispose();
+    shopIdController.dispose();
     priceController.dispose();
     quantityController.dispose();
   }
@@ -45,25 +51,58 @@ class _AddProductScreenState extends State<AddProductScreen> {
     'Fashion'
   ];
 
-  void sellProduct() {
-    if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
-      adminServices.sellProduct(
-        context: context,
-        name: productNameController.text,
-        description: descriptionController.text,
-        price: double.parse(priceController.text),
-        quantity: double.parse(quantityController.text),
-        category: category,
-        images: images,
+ void sellProduct() {
+  if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
+    double price;
+    try {
+      price = double.parse(priceController.text);
+    } catch (e) {
+      // Handle the invalid price format gracefully
+      print('Invalid price format: ${priceController.text}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Invalid price format: ${priceController.text}'),
+        ),
       );
+      return;
     }
+
+    // Add additional validation checks here if needed
+
+    // If all validation passes, sell the product
+    adminServices.sellProduct(
+      context: context,
+      shopName: productNameController.text,
+      shopDescription: shopDescriptionController.text,
+      shopId: shopIdController.text,
+      productName: productNameController.text,
+      productDescription: productDescriptionController.text,
+      price: price,
+      quantity: quantityController.text,
+      category: category,
+      images: images,
+    );
+  } else {
+    // If validation fails, show a generic error message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Product validation failed. Please check your input.'),
+      ),
+    );
   }
+}
+
 
   void selectImages() async {
     var res = await pickImages();
     setState(() {
       images = res;
     });
+  }
+
+  void navigateToCategory(String selectedCategory) {
+    // Implement navigation logic here, for now, print selected category
+    print('Selected category: $selectedCategory');
   }
 
   @override
@@ -92,7 +131,23 @@ class _AddProductScreenState extends State<AddProductScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(
               children: [
+                // Display category images dynamically
+                // Wrap(
+                //   spacing: 10,
+                //   children: productCategories.map((category) {
+                //     return GestureDetector(
+                //       onTap: () => navigateToCategory(category),
+                //       child: Image.asset(
+                //         '${category.toLowerCase()}.jpg', // Assuming category images are named accordingly
+                //         width: 100,
+                //         height: 100,
+                //         fit: BoxFit.cover,
+                //       ),
+                //     );
+                //   }).toList(),
+                // ),
                 const SizedBox(height: 20),
+                // Rest of the UI remains unchanged
                 images.isNotEmpty
                     ? CarouselSlider(
                         items: images.map(
@@ -111,7 +166,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           height: 200,
                         ),
                       )
-                    :GestureDetector(
+                    : GestureDetector(
                         onTap: selectImages,
                         child: DottedBorder(
                           borderType: BorderType.RRect,
@@ -151,7 +206,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 ),
                 const SizedBox(height: 10),
                 CustomTextField(
-                  controller: descriptionController,
+                  controller: productDescriptionController,
                   hintText: 'Description',
                   maxLines: 7,
                 ),
@@ -163,7 +218,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 const SizedBox(height: 10),
                 CustomTextField(
                   controller: quantityController,
-                  hintText: 'Quantity',
+                  hintText: 'quantity',
                 ),
                 const SizedBox(height: 10),
                 SizedBox(

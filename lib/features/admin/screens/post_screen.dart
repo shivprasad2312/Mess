@@ -1,8 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mess/common/widgets/loader.dart';
 import 'package:mess/features/admin/screens/add_product_screen.dart';
+import 'package:mess/features/admin/screens/add_product_screen_admin.dart';
 import 'package:mess/features/admin/service/admin_services.dart';
 import 'package:mess/features/auth/widgets/single_product.dart';
+import 'package:mess/main.dart';
 import 'package:mess/models/product.dart';
 
 class PostsScreen extends StatefulWidget {
@@ -15,6 +20,60 @@ class PostsScreen extends StatefulWidget {
 class _PostsScreenState extends State<PostsScreen> {
   List<Product>? products;
   final AdminServices adminServices = AdminServices();
+
+
+  // void showNotification() async {
+  //   AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+  //     "notifications-youtube",
+  //     "YouTube Notifications",
+  //     priority: Priority.max,
+  //     importance: Importance.max
+  //   );
+
+  //   DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
+  //     presentAlert: true,
+  //     presentBadge: true,
+  //     presentSound: true,
+  //   );
+
+  //   NotificationDetails notiDetails = NotificationDetails(
+  //     android: androidDetails,
+  //     iOS: iosDetails
+  //   );
+
+  //   await notificationsPlugin.show(
+  //     0, 'Sample Notification ', 'This is notification', notiDetails);
+
+  //   // DateTime scheduleDate = DateTime.now().add(Duration(seconds: 5));
+
+  //   // await notificationsPlugin.zonedSchedule(
+  //   //   0,
+  //   //   "Sample Notification",
+  //   //   "This is a notification",
+  //   //   tz.TZDateTime.from(scheduleDate, tz.local),
+  //   //   notiDetails,
+  //   //   uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.wallClockTime,
+  //   //   androidAllowWhileIdle: true,
+  //   //   payload: "notification-payload"
+  //   // );
+  // }
+
+
+  // // void checkForNotification() async {
+  // //   NotificationAppLaunchDetails? details = await notificationsPlugin.getNotificationAppLaunchDetails();
+
+  // //   if(details != null) {
+  // //     if(details.didNotificationLaunchApp) {
+  // //       NotificationResponse? response = details.notificationResponse;
+
+  // //       if(response != null) {
+  // //         String? payload = response.payload;
+  // //         log("Notification Payload: $payload" as num);
+  // //       }
+  // //     }
+  // //   }
+  // // }
+
 
   @override
   void initState() {
@@ -39,7 +98,7 @@ class _PostsScreenState extends State<PostsScreen> {
   }
 
   void navigateToAddProduct() {
-    Navigator.pushNamed(context, AddProductScreen.routeName);
+    Navigator.pushNamed(context, AddProductScreenAdmin.routeName);
   }
 
   @override
@@ -53,33 +112,39 @@ class _PostsScreenState extends State<PostsScreen> {
                   crossAxisCount: 2),
               itemBuilder: (context, index) {
                 final productData = products![index];
-                return Column(
-                  children: [
-                    SizedBox(
-                      height: 140,
-                      child: SingleProduct(
-                        image: productData.images[0],
+                return Padding(
+                  padding: EdgeInsets.only(top: 8),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 140,
+                        child: SingleProduct(
+                          image: productData.images[0],
+                        ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            productData.name,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 13),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                productData.shopName,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () => deleteProduct(productData, index),
+                              icon: const Icon(
+                                Icons.delete_outline,
+                              ),
+                            ),
+                          ],
                         ),
-                        IconButton(
-                          onPressed: () => deleteProduct(productData, index),
-                          icon: const Icon(
-                            Icons.delete_outline,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 );
               },
             ),

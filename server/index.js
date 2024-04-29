@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const authRouter = require("./routes/auth");
 const adminRouter = require("./routes/admin");
 const productRouter = require("./routes/product");
+const rentAdminRouter = require("./routes/rentAdmin");
+const rentProductRouter = require("./routes/rentProduct");
 
 const PORT = 3000;
 const app = express();
@@ -10,15 +12,12 @@ const DB = "mongodb+srv://shivprasadrahulwad:Rshivam%401234@cluster.0i4ldib.mong
 
 app.use(express.json());
 
-// Adjust the path to the adminMiddleware if needed
-// const adminMiddleware = require('./middlewares/admin');
-
-// Use the middleware for the adminRouter
-// app.use('/admin', adminMiddleware, adminRouter);
-
 app.use(authRouter);
 app.use(adminRouter);
+app.use(rentAdminRouter);
 app.use(productRouter);
+app.use(rentProductRouter);
+
 
 mongoose.connect(DB).then(() => {
     console.log("Connection successful");

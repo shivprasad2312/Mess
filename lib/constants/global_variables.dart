@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-String uri='http://192.168.0.144:3000';
+String uri='http://192.168.1.47:3000';
+const String google_api_key ="AIzaSyBbzSbqNS28snAxOWn4EMP5j9HW0jLNMYs";
 class GlobalVariables {
   // COLORS
   static const appBarGradient = LinearGradient(
@@ -29,25 +30,48 @@ static const List<String> carouselImages = [
 
   static const List<Map<String, String>> categoryImages = [
     {
-      'title': 'Pizza',
-      'image': 'images/pizza.png',
+      'title': 'BreakFast',
+      'image': 'images/breakfast.png',
     },
     {
-      'title': 'Ice',
-      'image': 'images/ice-cream.png',
+      'title': 'Snacks',
+      'image': 'images/food.png',
     },
     {
-      'title': 'Burger',
-      'image': 'images/burger.png',
+      'title': 'Drinks',
+      'image': 'images/drinks.png',
     },
     {
-      'title': 'Coffee',
-      'image': 'images/coffee.png',
+      'title': 'Meal',
+      'image': 'images/meal.png',
+    },
+    // {
+    //   'title': 'Fashion',
+    //   'image': 'images/coffee.png',
+    // },
+  ];
+
+  static const List<Map<String, String>> rentcategoryImages = [
+    {
+      'title': 'Hostel',
+      'image': 'images/breakfast.png',
     },
     {
-      'title': 'Fashion',
-      'image': 'images/coffee.png',
+      'title': '1 BHK',
+      'image': 'images/food.png',
     },
+    {
+      'title': '2 BHK',
+      'image': 'images/drinks.png',
+    },
+    {
+      'title': '1 RK',
+      'image': 'images/meal.png',
+    },
+    // {
+    //   'title': 'Fashion',
+    //   'image': 'images/coffee.png',
+    // },
   ];
 
 }
